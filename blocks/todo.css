@@ -74,6 +74,11 @@
   content: "Delete";
 }
 
+.todo__delete-btn:hover {
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
 @media screen and (max-width: 630px) {
   .todo__label {
     display: grid;
@@ -105,5 +110,9 @@
 
   .todo__delete-btn::before {
     content: "";
+  }
+
+  .todo__delete-btn:hover {
+    opacity: 0.7;
   }
 }
