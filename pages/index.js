@@ -20,19 +20,26 @@ function handleEscClose(evt) {
   }
 }
 
-const openModal = (modal) => modal.classList.add("popup_visible");
-activePopup = modal;
-modal.classList.add("popup_visible");
-document.addEventListener("keydown", handleEscClose);
+const openModal = (modal) => {
+  activePopup = modal;
+  modal.classList.add("popup_visible");
+  document.addEventListener("keydown", handleEscClose);
+};
 
-const closeModal = (modal) => modal.classList.remove("popup_visible");
-modal.classList.remove("popup_visible");
-document.removeEventListener("keydown", handleEscClose);
-activePopup = null;
+const closeModal = (modal) => {
+  modal.classList.remove("popup_visible");
+  document.removeEventListener("keydown", handleEscClose);
+  activePopup = null;
+};
 
 const generateTodo = (data) => {
   const todo = new Todo(data, "#todo-template");
   return todo.getView();
+};
+
+const renderTodo = (item) => {
+  const todo = generateTodo(item);
+  todosList.append(todo);
 };
 
 addTodoButton.addEventListener("click", () => openModal(addTodoPopup));
@@ -55,12 +62,8 @@ addTodoForm.addEventListener("submit", (evt) => {
   closeModal(addTodoPopup);
 });
 
-const renderTodo = (item) => {
-  const todo = generateTodo(item);
-  todosList.append(todo);
-};
+// -------------------- Initial Render --------------------
 
 initialTodos.forEach((item) => {
-  const renderTodo = generateTodo(item);
-  todosList.append(todo);
+  renderTodo(item);
 });
