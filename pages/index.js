@@ -12,8 +12,23 @@ const todosList = document.querySelector(".todos__list");
 const formValidator = new FormValidator(validationConfig, addTodoForm);
 formValidator.enableValidation();
 
+let activePopup = null;
+
+function handleEscClose(evt) {
+  if (evt.key === "Escape" && activePopup) {
+    closeModal(activePopup);
+  }
+}
+
 const openModal = (modal) => modal.classList.add("popup_visible");
+activePopup = modal;
+modal.classList.add("popup_visible");
+document.addEventListener("keydown", handleEscClose);
+
 const closeModal = (modal) => modal.classList.remove("popup_visible");
+modal.classList.remove("popup_visible");
+document.removeEventListener("keydown", handleEscClose);
+activePopup = null;
 
 const generateTodo = (data) => {
   const todo = new Todo(data, "#todo-template");
@@ -40,7 +55,12 @@ addTodoForm.addEventListener("submit", (evt) => {
   closeModal(addTodoPopup);
 });
 
-initialTodos.forEach((item) => {
+const renderTodo = (item) => {
   const todo = generateTodo(item);
+  todosList.append(todo);
+};
+
+initialTodos.forEach((item) => {
+  const renderTodo = generateTodo(item);
   todosList.append(todo);
 });
